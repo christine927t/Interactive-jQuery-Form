@@ -32,8 +32,15 @@ $designSelect.on('change',function(event){
     if ($(event.target).val()==='js puns'){
         $colorPlaceholder.remove();
         $colorSelectOptions.eq(0).attr('selected','selected');
+        $('#color option:gt(2)') && $('#color option:lt(6)').hide();
         $('#color option:gt(0)') && $('#color option:lt(3)').show();
         
+        
+    } else {//($(event.target).val()==='heart js'){
+        $colorPlaceholder.remove();
+        $colorSelectOptions.eq(3).attr('selected','selected');
+        $('#color option:gt(2)') && $('#color option:lt(6)').show();
+        $('#color option:gt(0)') && $('#color option:lt(3)').hide();
     }
 
 })
