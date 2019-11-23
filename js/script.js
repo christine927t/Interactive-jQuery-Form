@@ -60,8 +60,10 @@ $('.activities').on('change',function(event){
     console.log($input);
     
     let $cost = $input.attr('data-cost');
-    let $num = '';
-    let $costNum = $num.replace($cost, '$');
+    console.log($cost);
+    let $costNum = $cost.replace('$', '');
+    console.log($costNum);
+    Number($costNum);
     console.log($costNum);
     console.log(typeof($costNum));
 })
