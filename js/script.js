@@ -2,6 +2,8 @@ $(document).ready(function() {
     $('#name').focus();
 });
 
+///////////***********Job Role Section*******////////////
+
 //hide 'other' input on load
 $('#other-title').hide();
 //click handler for 'other' job role option
@@ -14,6 +16,7 @@ $jobSelect.on('change', function(event){
     }    
  });
 
+///////////*********T-Shirt section*********////////////
 
 //hide 'select theme' in design menu
 const $designSelect = $('#design');
@@ -42,5 +45,28 @@ $designSelect.on('change',function(event){
         $('#color option:gt(2)') && $('#color option:lt(6)').show();
         $('#color option:gt(0)') && $('#color option:lt(3)').hide();
     }
+});
 
+///////////*********Activities section*********////////////
+
+//create an element to display the total activity cost
+let $storeTotal = 0;
+const $totalCost = $('<span>Total Cost: $'+ $storeTotal +'</span>');
+$('.activities').append($totalCost);
+
+//listen for changes in the activity section
+$('.activities').on('change',function(event){
+    let $input = ($(event.target));
+    console.log($input);
+    
+    let $cost = $input.attr('data-cost');
+    let $num = '';
+    let $costNum = $num.replace($cost, '$');
+    console.log($costNum);
+    console.log(typeof($costNum));
 })
+
+
+//update and display the total activity cost
+
+//disable conflicting activities
