@@ -108,19 +108,27 @@ $payment.on('change',function(event){
 })
 
 ///////////*********Validation section*********////////////
-const invalid = (element) => {
-    ($(element).css('border', 'red'));
+    $("<style>")
+    .prop("type", "text/css")
+    .html("\
+    #errors {\
+        border: red 1px solid;\
+        color: red;\
+    }")
+    .appendTo('head');
     
-
-}
 //validation for name
 const nameValidation = () => {
-    if ($('#name').text === ' ') {
-        $('#name').css('border', 'red');
+    if ($('#name:text').val().length === 0) {
+        console.log($('#name'));
+        $('#name').addClass('#errors');
         $('<span>Please enter your name</span>').appendTo('#name');
+    } else {
+
     }
 
 }
+
 
 
 //validation for email
@@ -135,6 +143,5 @@ const nameValidation = () => {
 /////validation for credit card cvv
 const $button = $('button')
 $button.on('click', function(event) {
-    event.preventDefault();
     nameValidation();
  });
