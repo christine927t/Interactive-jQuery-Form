@@ -73,16 +73,26 @@ $('.activities').on('change',function(event){
     $(totalCost).html('<span>Total Cost: $'+ $storeTotal +'</span>');
 
     //dealing with conflicting activities day/time
+    let activities = document.querySelectorAll('.activities input');
+    // $('.activities input').each(function(e){
+    //     let $activity = ($(e.target).attr('data-day-and-time'));
+    //     console.log($activity);
+    //     if ($dayTime === $activity){
+    //         $activity.prop('disabled', true);
+    //     } else {
+    //         $activity.prop('disabled', false);
+    //     }
+    // })
 
-    $('.activities input').each(function(i, input){
-        let $activity = input[i];
-        console.log($activity);
-        if ($dayTime[i] === $input[i]){
-
-
-            $dayTime[i].prop('disabled', true)
+    for (i=0; i < activities.length; i ++){
+        let i;
+        if (i.checked === $input) {
+            activities[i].disabled = true;
+        } else {
+            activities[i].disabled = false;
         }
-    })
+    }
+    
 })
 
 ///////////*********Payment section*********////////////
@@ -141,7 +151,8 @@ const nameValidation = () => {
 //validation for credit card
 /////validation for credit card zip
 /////validation for credit card cvv
-const $button = $('button')
-$button.on('click', function(event) {
-    nameValidation();
- });
+
+
+// const $button = $('button')
+// $button.on('click', function(event) {
+//  });
