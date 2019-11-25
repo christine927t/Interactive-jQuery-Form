@@ -59,8 +59,11 @@ $('.activities').on('change',function(event){
     let $inputCost = $input.attr('data-cost');
     let $costNum = $inputCost.replace('$', '');
     let $cost = parseInt($costNum);
-    let $dayTime = $input.attr('data-day-and-time');
-    console.log($dayTime);
+
+    let dayTime = $input.attr('data-day-and-time');
+    let activitiesAll = document.querySelectorAll('.activities input');
+    console.log(activitiesAll);
+    console.log(dayTime);
 
     //update $cost based on activities checked
     if ($(event.target).prop('checked') === true) {
@@ -72,17 +75,29 @@ $('.activities').on('change',function(event){
     //display updated total cost of activities on page
     $(totalCost).html('<span>Total Cost: $'+ $storeTotal +'</span>');
 
-    //dealing with conflicting activities day/time
+    ////////dealing with conflicting activities day/time/////////////
 
-    $('.activities input').each(function(i, input){
-        let $activity = input[i];
-        console.log($activity);
-        if ($dayTime[i] === $input[i]){
+    // $($activitiesAll).each(function(i, input){
+    //     let $activity = $activitiesAll[i];
+    //     let $activityDT = $activity.attr('data-day-and-time');
+    //     console.log($activityDT);
+    //     // if ($activity.attr('data-day-and-time') === $dayTime){
+    //     //     $activity.prop('disabled', true)
+    //     // } else {
+    //     //     $activity.prop('disabled', false)
+    //     // }
+    // })
 
-
-            $dayTime[i].prop('disabled', true)
+    for (i = 0; i < activitiesAll.length; i ++){
+    let activity = activitiesAll[i].dataset.dayAndTime;
+    console.log(activity);
+        if (activity === dayTime && $input !== activity){
+            activity[i].disabled = true;
+        } else {
+            activity[i].disabled = false;
         }
-    })
+        
+    }
 })
 
 ///////////*********Payment section*********////////////
