@@ -87,16 +87,14 @@ $('.activities').on('change',function(event){
         if (activity === dayTime && $input !== activity){
            if ($input.prop("checked")){
                 console.log($input)
-                console.log(activitiesAll[i] + 'this instance of activity')
-                console.log(activity + 'activity')
                 $input.disabled = false;
                 activitiesAll[i].disabled = true;
                 
             } else {
-               // activitiesAll[i].disabled = false;
+               activitiesAll[i].disabled = false;
             }
         } else {
-            //activitiesAll[i].disabled = false;
+            activitiesAll[i].disabled = false;
         }
         
     }
