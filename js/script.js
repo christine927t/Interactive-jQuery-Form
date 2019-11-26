@@ -59,8 +59,11 @@ $('.activities').on('change',function(event){
     let $inputCost = $input.attr('data-cost');
     let $costNum = $inputCost.replace('$', '');
     let $cost = parseInt($costNum);
-    let $dayTime = $input.attr('data-day-and-time');
-    console.log($dayTime);
+
+    let dayTime = $input.attr('data-day-and-time');
+    let activitiesAll = document.querySelectorAll('.activities input');
+    console.log(activitiesAll);
+    console.log(dayTime);
 
     //update $cost based on activities checked
     if ($(event.target).prop('checked') === true) {
@@ -72,27 +75,29 @@ $('.activities').on('change',function(event){
     //display updated total cost of activities on page
     $(totalCost).html('<span>Total Cost: $'+ $storeTotal +'</span>');
 
-    //dealing with conflicting activities day/time
-    let activities = document.querySelectorAll('.activities input');
-    // $('.activities input').each(function(e){
-    //     let $activity = ($(e.target).attr('data-day-and-time'));
-    //     console.log($activity);
-    //     if ($dayTime === $activity){
-    //         $activity.prop('disabled', true);
-    //     } else {
-    //         $activity.prop('disabled', false);
-    //     }
+    ////////dealing with conflicting activities day/time/////////////
+
+    // $($activitiesAll).each(function(i, input){
+    //     let $activity = $activitiesAll[i];
+    //     let $activityDT = $activity.attr('data-day-and-time');
+    //     console.log($activityDT);
+    //     // if ($activity.attr('data-day-and-time') === $dayTime){
+    //     //     $activity.prop('disabled', true)
+    //     // } else {
+    //     //     $activity.prop('disabled', false)
+    //     // }
     // })
 
-    for (i=0; i < activities.length; i ++){
-        let i;
-        if (i.checked === $input) {
-            activities[i].disabled = true;
+    for (i = 0; i < activitiesAll.length; i ++){
+    let activity = activitiesAll[i].dataset.dayAndTime;
+    console.log(activity);
+        if (activity === dayTime && $input !== activity){
+            activity[i].disabled = true;
         } else {
-            activities[i].disabled = false;
+            activity[i].disabled = false;
         }
+        
     }
-    
 })
 
 ///////////*********Payment section*********////////////
