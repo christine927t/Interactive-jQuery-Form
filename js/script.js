@@ -8,12 +8,13 @@ $(document).ready(function() {
 $('#other-title').hide();
 //click handler for 'other' job role option
 const $jobSelect = $('#title');
-const $jobOption = $('#title option');
+//const $jobOption = $('#title option');
 $jobSelect.on('change', function(event){
     if ($(event.target).val()==='other'){
     $('#other-title').show();
     } else {
-    }    
+       $('#other-title').hide();
+    }
  });
 
 ///////////*********T-Shirt section*********////////////
@@ -54,49 +55,46 @@ let totalCost = document.createElement("span");
 $('.activities').append(totalCost);
 
 //listen for changes in the activity section
+let $checkbox = $('.activities input[type="checkbox"]');
 $('.activities').on('change',function(event){
-    let $input = ($(event.target));   
-    let $inputCost = $input.attr('data-cost');
-    let $costNum = $inputCost.replace('$', '');
-    let $cost = parseInt($costNum);
+    for (i = 0; i < $checkbox.length; i ++){
+        let $clicked = ($(event.target));   // target main e.target click
+        let $clickedCost = $clicked.attr('data-cost');  
+        let $clickedCostNum = parseInt($clickedCost.replace('$', '')); //clicked as num
+        let $clickedDayTime = $clicked.attr('data-day-and-time'); //clicked day/time
+        let $checkboxDayTime = $checkbox[i].dataset.dayAndTime; //checkbox day/time
+        let $checkboxCost = $checkbox[i].dataset.cost;
+        console.log($clickedCost);
+        console.log($checkboxCost)
+        console.log($checkboxDayTime);
+        console.log($storeTotal);
 
-    let dayTime = $input.attr('data-day-and-time');
-    let activitiesAll = document.querySelectorAll('.activities input');
-    //console.log(activitiesAll);
-    //console.log(dayTime);
-
-    //update $cost based on activities checked
-    if ($(event.target).prop('checked') === true) {
-        $storeTotal = $storeTotal + $cost;
-    } else {
-        $storeTotal = $storeTotal - $cost;
-    } 
-    console.log("The new total is: " +$storeTotal);
-    //display updated total cost of activities on page
-    $(totalCost).html('<span>Total Cost: $'+ $storeTotal +'</span>');
-
-
-    ////////dealing with conflicting activities day/time/////////////
-
-    //when a checkbox is clicked, loop through all activities and check if any have
-    //conflicting day/times. if so, set the other activities to disabled
-    for (i = 1; i < activitiesAll.length; i ++){
-    let activity = activitiesAll[i].dataset.dayAndTime;
-    //console.log(activitiesAll[i]);
-    //console.log($input);
-        if (activity === dayTime && $input !== activity){
-           if ($input.prop("checked")){
-                console.log($input)
-                $input.disabled = false;
-                activitiesAll[i].disabled = true;
-                
-            } else {
-               activitiesAll[i].disabled = false;
-            }
+    //update $clickedCostNum based on activities checked
+    if ($clickedCostNum === $checkboxCost && $clicked !== $checkbox[i]){
+        if ($($clicked).prop('checked')) {
+            $storeTotal = $storeTotal + $clickedCostNum;
         } else {
-            activitiesAll[i].disabled = false;
+            $storeTotal = $storeTotal - $clickedCostNum;
+        } 
+    }
+    console.log("The new total is: " +$storeTotal);
+    $(totalCost).html('<span>Total Cost: $'+ $storeTotal +'</span>');
+  
+    ////////dealing with conflicting activities day/time/////////////
+    if ($clickedDayTime === $checkboxDayTime && $clicked !== $checkbox[i]){
+        if ($clicked.prop("checked")){
+            $checkbox[i].disabled = true;
+            $clicked.disabled = false;
+            console.log($clicked)
+            if ($checkbox[i].disabled){
+                //$checkbox[i].parentNode.classList.add("disabled")
+            } else {
+                $checkbox[i].disabled = false;
+                //$checkbox[i].parentNode.classList.remove("disabled")
+            }   
         }
-        
+    }
+
     }
 })
 
