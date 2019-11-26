@@ -62,8 +62,8 @@ $('.activities').on('change',function(event){
 
     let dayTime = $input.attr('data-day-and-time');
     let activitiesAll = document.querySelectorAll('.activities input');
-    console.log(activitiesAll);
-    console.log(dayTime);
+    //console.log(activitiesAll);
+    //console.log(dayTime);
 
     //update $cost based on activities checked
     if ($(event.target).prop('checked') === true) {
@@ -75,26 +75,28 @@ $('.activities').on('change',function(event){
     //display updated total cost of activities on page
     $(totalCost).html('<span>Total Cost: $'+ $storeTotal +'</span>');
 
+
     ////////dealing with conflicting activities day/time/////////////
 
-    // $($activitiesAll).each(function(i, input){
-    //     let $activity = $activitiesAll[i];
-    //     let $activityDT = $activity.attr('data-day-and-time');
-    //     console.log($activityDT);
-    //     // if ($activity.attr('data-day-and-time') === $dayTime){
-    //     //     $activity.prop('disabled', true)
-    //     // } else {
-    //     //     $activity.prop('disabled', false)
-    //     // }
-    // })
-
-    for (i = 0; i < activitiesAll.length; i ++){
+    //when a checkbox is clicked, loop through all activities and check if any have
+    //conflicting day/times. if so, set the other activities to disabled
+    for (i = 1; i < activitiesAll.length; i ++){
     let activity = activitiesAll[i].dataset.dayAndTime;
-    console.log(activity);
+    //console.log(activitiesAll[i]);
+    //console.log($input);
         if (activity === dayTime && $input !== activity){
-            activity[i].disabled = true;
+           if ($input.prop("checked")){
+                console.log($input)
+                console.log(activitiesAll[i] + 'this instance of activity')
+                console.log(activity + 'activity')
+                $input.disabled = false;
+                activitiesAll[i].disabled = true;
+                
+            } else {
+               // activitiesAll[i].disabled = false;
+            }
         } else {
-            activity[i].disabled = false;
+            //activitiesAll[i].disabled = false;
         }
         
     }
