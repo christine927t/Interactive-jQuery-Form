@@ -146,6 +146,8 @@ const nameValidation = () => {
 /////validation for credit card cvv
 
 
-// const $button = $('button')
-// $button.on('click', function(event) {
-//  });
+const $button = $('button')
+$button.on('click', function() {
+    nameValidation();
+    console.log("Submit has been clicked")
+ });
