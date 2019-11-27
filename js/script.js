@@ -65,24 +65,18 @@ $('.activities').on('change',function(event){
         let $checkboxDayTime = $checkbox.eq(i).data('day-and-time'); //checkbox day/time
         let $checkboxCost = $checkbox.eq(i).data('cost');
         let $checkboxCostNum = parseInt($checkboxCost.replace('$', ''));
-        console.log('clicked cost=' + $clickedCostNum);
-        console.log('checkbox cost=' + $checkboxCostNum);
-        //console.log('clicked day/time=' + $clickedDayTime);
-        //console.log('checkbox day/time=' + $checkboxDayTime);
-        //console.log($storeTotal);
-        console.log($checkbox.eq(i).prop('checked'))
+
     //update $clickedCostNum based on activities checked
-    //if ($clickedCostNum === $checkboxCostNum && $clicked !== $checkbox.eq(i)){
-        if ($(this).prop('checked')) {
+        if ($clicked.eq(i).prop('checked')) {
             $storeTotal = $storeTotal + $clickedCostNum;
-        } else {
+        } else if ($clicked.eq(i).prop('checked')===false){
             $storeTotal = $storeTotal - $clickedCostNum;
         } 
-    //}
+  
     console.log("The new total is: " +$storeTotal);
     $(totalCost).html('<span>Total Cost: $'+ $storeTotal +'</span>');
       
-    ////////dealing with conflicting activities day/time/////////////
+    //dealing with conflicting activities day/time//
     if ($clickedDayTime === $checkboxDayTime){
         if ($clicked.prop('checked')){
             $checkbox.eq(i).prop('disabled',true);
@@ -91,7 +85,6 @@ $('.activities').on('change',function(event){
         }          
     }
     $clicked.prop('disabled',false);
-
     } 
 })
 
