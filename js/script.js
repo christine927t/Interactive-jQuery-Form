@@ -62,40 +62,37 @@ $('.activities').on('change',function(event){
         let $clickedCost = $clicked.attr('data-cost');  
         let $clickedCostNum = parseInt($clickedCost.replace('$', '')); //clicked as num
         let $clickedDayTime = $clicked.attr('data-day-and-time'); //clicked day/time
-        let $checkboxDayTime = $checkbox[i].dataset.dayAndTime; //checkbox day/time
-        let $checkboxCost = $checkbox[i].dataset.cost;
-        console.log($clickedCost);
-        console.log($checkboxCost)
-        console.log($checkboxDayTime);
-        console.log($storeTotal);
-
+        let $checkboxDayTime = $checkbox.eq(i).data('day-and-time'); //checkbox day/time
+        let $checkboxCost = $checkbox.eq(i).data('cost');
+        let $checkboxCostNum = parseInt($checkboxCost.replace('$', ''));
+        console.log('clicked cost=' + $clickedCostNum);
+        console.log('checkbox cost=' + $checkboxCostNum);
+        //console.log('clicked day/time=' + $clickedDayTime);
+        //console.log('checkbox day/time=' + $checkboxDayTime);
+        //console.log($storeTotal);
+        console.log($checkbox.eq(i).prop('checked'))
     //update $clickedCostNum based on activities checked
-    if ($clickedCostNum === $checkboxCost && $clicked !== $checkbox[i]){
-        if ($($clicked).prop('checked')) {
+    //if ($clickedCostNum === $checkboxCostNum && $clicked !== $checkbox.eq(i)){
+        if ($(this).prop('checked')) {
             $storeTotal = $storeTotal + $clickedCostNum;
         } else {
             $storeTotal = $storeTotal - $clickedCostNum;
         } 
-    }
+    //}
     console.log("The new total is: " +$storeTotal);
     $(totalCost).html('<span>Total Cost: $'+ $storeTotal +'</span>');
-  
+      
     ////////dealing with conflicting activities day/time/////////////
-    if ($clickedDayTime === $checkboxDayTime && $clicked !== $checkbox[i]){
-        if ($clicked.prop("checked")){
-            $checkbox[i].disabled = true;
-            $clicked.disabled = false;
-            console.log($clicked)
-            if ($checkbox[i].disabled){
-                //$checkbox[i].parentNode.classList.add("disabled")
-            } else {
-                $checkbox[i].disabled = false;
-                //$checkbox[i].parentNode.classList.remove("disabled")
-            }   
-        }
+    if ($clickedDayTime === $checkboxDayTime){
+        if ($clicked.prop('checked')){
+            $checkbox.eq(i).prop('disabled',true);
+        }   else {
+            $checkbox.eq(i).prop('disabled',false);
+        }          
     }
+    $clicked.prop('disabled',false);
 
-    }
+    } 
 })
 
 ///////////*********Payment section*********////////////
