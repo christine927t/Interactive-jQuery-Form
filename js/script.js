@@ -124,8 +124,9 @@ $payment.on('change',function(event){
 const nameValidation = () => {
     if ($('#name:text').val().length === 0) {
         console.log($('#name'));
-        $('#name').addClass('#errors');
-        $('<span>Please enter your name</span>').appendTo('#name');
+        //$('#name').addClass('#errors');
+        $('<div class="error-message" display="block">Please enter your name</div>').prepend('#name');
+        $('.error-message').show();
     } else {
 
     }
@@ -135,19 +136,36 @@ const nameValidation = () => {
 
 
 //validation for email
-
+const emailValidation = () => {}
 
 
 //validation for activities
-
+const activitiesValidation = () => {}
 
 //validation for credit card
+const ccValidation = () => {}
 /////validation for credit card zip
 /////validation for credit card cvv
 
+const masterValidation = () => {
+    nameValidation;
+    emailValidation;
+    activitiesValidation;
+    if ($paymentOptions.val()==='Credit Card'){
+        ccValidation;
+    }
+    if (nameValidation === true && emailValidation === true && activitiesValidation === true){
+        //add cc validation if used
+        return true;
+    }    else {
+            return false;
+        }
+    }
 
-const $button = $('button')
-$button.on('click', function() {
+
+//const $button = $('button')
+$('form').submit(function(event) {
+    event.preventDefault();
+    console.log("Submit has been clicked");
     nameValidation();
-    console.log("Submit has been clicked")
  });
