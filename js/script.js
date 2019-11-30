@@ -120,6 +120,8 @@ const nameValidation = () => {
         $name.css("border","red solid 2px");
         return false;
     } else {
+        $('.error-message').css({"display":"none"});
+        $name.css({"border":"none"});
         return true;
     }
 }
@@ -132,6 +134,8 @@ const emailValidation = () => {
     const $pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const $isValid = $pattern.test($email.val());
     if ($email.val().length > 0 && $isValid == true){
+        $('.error-message').css({"display":"none"});
+        $email.css({"border":"none"});
         return true;
     } else {
         $email.before($('<div class="error-message" display="block">Please enter a valid email address</div>'));
@@ -152,20 +156,36 @@ const activitiesValidation = () => {
             $numChecked = $numChecked + 1;
         } else {}
     }
-    console.log($checkbox)
-    console.log($numChecked)
     if ($numChecked < 1){
         $actLegend.append($('<div class="error-message" display="block">Please register for at least one activity.</div>'));
         $actLegend.css("border","red solid 2px");   
         return false;
     } else {
-        .error-message
+        $('.error-message').css({"display":"none"});
+        $actLegend.css({"border":"none"});   
         return true;
     }
 }
 
 //validation for credit card
-const ccValidation = () => {}
+const ccValidation = () => {
+    const $creditCard = $('#credit-card');
+    const $ccNum = $('#cc-num');
+    if ($paymentOptions.val()==='Credit Card'){
+        const $pattern = /[0-9]{13,16}/;
+        const $isValid = $pattern.test($ccNum.val());
+        $('.error-message').css({"display":"none"});
+        $ccNum.css({"border":"none"}); 
+        return true;
+    } else {
+        $ccNum.after($('<div class="error-message" display="block">Please enter a valid credit card number.</div>'));
+        $ccNum.css({"border":"red solid 2px","margin-bottom":"0"});   
+        return false;
+    }
+
+
+
+}
 /////validation for credit card zip
 /////validation for credit card cvv
 
@@ -177,7 +197,6 @@ const masterValidation = () => {
         ccValidation;
     }
     if (nameValidation === true && emailValidation === true && activitiesValidation === true){
-        //add cc validation if used
         return true;
     }    else {
             return false;
@@ -192,6 +211,6 @@ $('form').submit(function(event) {
     nameValidation();
     emailValidation();
     activitiesValidation();
+    ccValidation();
     $('.error-message').css({"color":"red"});
-
  });
