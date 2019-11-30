@@ -136,14 +136,13 @@ const nameValidation = () => {
 
 
 //validation for email
-const $email = $('#mail');
-const validateE = () => {
-    const $pattern = 
-    const $isValid = $pattern.test($email);
-}
-const emailValidation = ($email) => {
-    if (($email).val().length > 0 && validateE === true){
-        console.log($email);
+const emailValidation = () => {
+    const $email = $('#mail');
+    const $pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const $isValid = $pattern.test($email.val());
+    console.log($isValid);
+    if ($email.val().length > 0 && $isValid == true){
+        console.log($email.val());
         return true;
     } else {
         $email.before($('<div class="error-message" display="block">Please enter a valid email address</div>'));
@@ -184,7 +183,7 @@ $('form').submit(function(event) {
     event.preventDefault();
     console.log("Submit has been clicked");
     nameValidation();
-    emailValidation($email);
+    emailValidation();
     $('.error-message').css({"color":"red"});
 
  });
