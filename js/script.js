@@ -111,35 +111,48 @@ $payment.on('change',function(event){
 })
 
 ///////////*********Validation section*********////////////
-    $("<style>")
-    .prop("type", "text/css")
-    .html("\
-    .errors {\
-        border: red 1px solid;\
-        color: red;\
-    }")
-    .appendTo('head');
+    // $("<style>")
+    // .prop("type", "text/css")
+    // .html("\
+    // .errors {\
+    //     border: red 1px solid;\
+    //     color: red;\
+    // }")
+    // .appendTo('head');
     
+
+
 //validation for name
 const nameValidation = () => {
     const $name = $('#name')
     if (($name).val().length === 0) {
         console.log($name);
-        //$('#name').addClass('#errors');
         $name.before($('<div class="error-message" display="block">Please enter your name</div>'));
-        //$('.error-message').addClass('.errors');
-        $('.error-message').css("color","red");
         $name.css("border","red solid 2px");
     } else {
-
     }
-
 }
 
 
 
 //validation for email
-const emailValidation = () => {}
+const $email = $('#mail');
+const validateE = () => {
+    const $pattern = 
+    const $isValid = $pattern.test($email);
+}
+const emailValidation = ($email) => {
+    if (($email).val().length > 0 && validateE === true){
+        console.log($email);
+        return true;
+    } else {
+        $email.before($('<div class="error-message" display="block">Please enter a valid email address</div>'));
+        $email.css("border","red solid 2px");
+        console.log($email);
+        return false;
+    }
+
+}
 
 
 //validation for activities
@@ -171,4 +184,7 @@ $('form').submit(function(event) {
     event.preventDefault();
     console.log("Submit has been clicked");
     nameValidation();
+    emailValidation($email);
+    $('.error-message').css({"color":"red"});
+
  });
