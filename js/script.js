@@ -114,7 +114,7 @@ $payment.on('change',function(event){
     $("<style>")
     .prop("type", "text/css")
     .html("\
-    #errors {\
+    .errors {\
         border: red 1px solid;\
         color: red;\
     }")
@@ -122,11 +122,14 @@ $payment.on('change',function(event){
     
 //validation for name
 const nameValidation = () => {
-    if ($('#name:text').val().length === 0) {
-        console.log($('#name'));
+    const $name = $('#name')
+    if (($name).val().length === 0) {
+        console.log($name);
         //$('#name').addClass('#errors');
-        $('<div class="error-message" display="block">Please enter your name</div>').prepend('#name');
-        $('.error-message').show();
+        $name.before($('<div class="error-message" display="block">Please enter your name</div>'));
+        //$('.error-message').addClass('.errors');
+        $('.error-message').css("color","red");
+        $name.css("border","red solid 2px");
     } else {
 
     }
