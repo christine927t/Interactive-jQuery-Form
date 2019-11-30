@@ -111,25 +111,16 @@ $payment.on('change',function(event){
 })
 
 ///////////*********Validation section*********////////////
-    // $("<style>")
-    // .prop("type", "text/css")
-    // .html("\
-    // .errors {\
-    //     border: red 1px solid;\
-    //     color: red;\
-    // }")
-    // .appendTo('head');
-    
-
 
 //validation for name
 const nameValidation = () => {
     const $name = $('#name')
     if (($name).val().length === 0) {
-        console.log($name);
         $name.before($('<div class="error-message" display="block">Please enter your name</div>'));
         $name.css("border","red solid 2px");
+        return false;
     } else {
+        return true;
     }
 }
 
@@ -140,14 +131,11 @@ const emailValidation = () => {
     const $email = $('#mail');
     const $pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const $isValid = $pattern.test($email.val());
-    console.log($isValid);
     if ($email.val().length > 0 && $isValid == true){
-        console.log($email.val());
         return true;
     } else {
         $email.before($('<div class="error-message" display="block">Please enter a valid email address</div>'));
         $email.css("border","red solid 2px");
-        console.log($email);
         return false;
     }
 
@@ -155,7 +143,26 @@ const emailValidation = () => {
 
 
 //validation for activities
-const activitiesValidation = () => {}
+const activitiesValidation = () => {
+    let $numChecked = 0;
+    const $activities = $('.activities');
+    const $actLegend = $('.activities legend');
+    for (i = 0; i < $checkbox.length; i ++){
+        if ($checkbox.eq(i).prop('checked')) {
+            $numChecked = $numChecked + 1;
+        } else {}
+    }
+    console.log($checkbox)
+    console.log($numChecked)
+    if ($numChecked < 1){
+        $actLegend.append($('<div class="error-message" display="block">Please register for at least one activity.</div>'));
+        $actLegend.css("border","red solid 2px");   
+        return false;
+    } else {
+        .error-message
+        return true;
+    }
+}
 
 //validation for credit card
 const ccValidation = () => {}
@@ -184,6 +191,7 @@ $('form').submit(function(event) {
     console.log("Submit has been clicked");
     nameValidation();
     emailValidation();
+    activitiesValidation();
     $('.error-message').css({"color":"red"});
 
  });
