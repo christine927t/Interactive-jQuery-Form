@@ -91,7 +91,8 @@ $('.activities').on('change',function(event){
 ///////////*********Payment section*********////////////
 
 const $payment = $('#payment');
-const $paymentOptions = $('#payment option')
+const $paymentOptions = $('#payment option');
+let $paymentSel;
 $paymentOptions.eq(0).hide();
 
 $payment.on('change',function(event){
@@ -107,7 +108,8 @@ $payment.on('change',function(event){
         $('#credit-card').hide();
         $('#paypal').hide();
         $('#bitcoin').show();
-    }
+    } console.log($(event.target).val())
+    $paymentSel = $(event.target);
 })
 
 ///////////*********Validation section*********////////////
@@ -116,17 +118,18 @@ $payment.on('change',function(event){
 const nameValidation = () => {
     const $name = $('#name')
     if (($name).val().length === 0) {
-        $name.before($('<div class="error-message" display="block">Please enter your name</div>'));
-        $name.css("border","red solid 2px");
-        return false;
+        if($('#error-name').length > 0)
+        {} else {
+            $name.before($('<div class="error-message" id="error-name" display="block">Please enter your name</div>'));
+            $name.css("border","red solid 2px");
+            return false;
+        }
     } else {
         $('.error-message').css({"display":"none"});
         $name.css({"border":"none"});
         return true;
     }
 }
-
-
 
 //validation for email
 const emailValidation = () => {
@@ -138,13 +141,14 @@ const emailValidation = () => {
         $email.css({"border":"none"});
         return true;
     } else {
-        $email.before($('<div class="error-message" display="block">Please enter a valid email address</div>'));
-        $email.css("border","red solid 2px");
-        return false;
+        if($('#error-email').length > 0)
+        {} else {
+            $email.before($('<div class="error-message" id="error-email" display="block">Please enter a valid email address</div>'));
+            $email.css("border","red solid 2px");
+            return false;
+        }
     }
-
 }
-
 
 //validation for activities
 const activitiesValidation = () => {
@@ -157,12 +161,13 @@ const activitiesValidation = () => {
         } else {}
     }
     if ($numChecked < 1){
-        $actLegend.append($('<div class="error-message" display="block">Please register for at least one activity.</div>'));
-        $actLegend.css("border","red solid 2px");   
-        return false;
+        if($('#error-act').length > 0)
+        {} else {
+            $actLegend.append($('<div class="error-message" id="error-act" display="block">Please register for at least one activity.</div>'));
+            return false;
+        }
     } else {
         $('.error-message').css({"display":"none"});
-        $actLegend.css({"border":"none"});   
         return true;
     }
 }
@@ -183,9 +188,12 @@ const ccValidation = () => {
             $ccNum.css({"border":"none"}); 
             return true;
         } else {
-            $ccNum.after($('<div class="error-message" display="block">Please enter a valid credit card number.</div>'));
-            $ccNum.css({"border":"red solid 2px","margin-bottom":"0"});   
-            return false;
+            if($('#error-cc').length > 0)
+            {} else {
+                $ccNum.after($('<div class="error-message" id="error-cc" display="block">Please enter a valid credit card number.</div>'));
+                $ccNum.css({"border":"red solid 2px","margin-bottom":"0"});   
+                return false;
+            }
         }
     }
 
@@ -198,9 +206,12 @@ const ccValidation = () => {
             $zip.css({"border":"none"}); 
             return true;
         } else {
-            $zip.after($('<div class="error-message" display="block">Please enter a valid zip code.</div>'));
-            $zip.css({"border":"red solid 2px","margin-bottom":"0"});   
-            return false;
+            if($('#error-zip').length > 0)
+            {} else {
+                $zip.after($('<div class="error-message" id="error-zip" display="block">Please enter a valid zip code.</div>'));
+                $zip.css({"border":"red solid 2px","margin-bottom":"0"});   
+                return false;
+            }
         }
     }
 
@@ -213,9 +224,12 @@ const ccValidation = () => {
             $cvv.css({"border":"none"}); 
             return true;
         } else {
-            $cvv.after($('<div class="error-message" display="block">Please enter a CVV code.</div>'));
-            $cvv.css({"border":"red solid 2px","margin-bottom":"0"});   
-            return false;
+            if($('#error-cvv').length > 0)
+            {} else {
+                $cvv.after($('<div class="error-message" id="error-cvv" display="block">Please enter a CVV code.</div>'));
+                $cvv.css({"border":"red solid 2px","margin-bottom":"0"});   
+                return false;
+            }
         }
     }
 
@@ -229,10 +243,12 @@ const masterValidation = () => {
     nameValidation();
     emailValidation();
     activitiesValidation();
-    console.log($paymentOptions.val());
-    if ($paymentOptions.val()==='Credit Card'){
+    if ($paymentSel.val()=== 'Credit Card'){
+        console.log($paymentSel.val());
         ccValidation();
     }
+
+
     // if (nameValidation === true && emailValidation === true && activitiesValidation === true){
     //     return true;
     // }    else {
