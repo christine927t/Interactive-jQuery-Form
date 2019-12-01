@@ -171,46 +171,83 @@ const activitiesValidation = () => {
 const ccValidation = () => {
     const $creditCard = $('#credit-card');
     const $ccNum = $('#cc-num');
-    if ($paymentOptions.val()==='Credit Card'){
-        const $pattern = /[0-9]{13,16}/;
+    const $zip = $('#zip');
+    const $cvv = $('#cvv');
+
+    //test cc num function
+    const ccNumValid = () =>{
+        const $pattern = /^[0-9]{13,16}$/;
         const $isValid = $pattern.test($ccNum.val());
-        $('.error-message').css({"display":"none"});
-        $ccNum.css({"border":"none"}); 
-        return true;
-    } else {
-        $ccNum.after($('<div class="error-message" display="block">Please enter a valid credit card number.</div>'));
-        $ccNum.css({"border":"red solid 2px","margin-bottom":"0"});   
-        return false;
-    }
-
-
-
-}
-/////validation for credit card zip
-/////validation for credit card cvv
-
-const masterValidation = () => {
-    nameValidation;
-    emailValidation;
-    activitiesValidation;
-    if ($paymentOptions.val()==='Credit Card'){
-        ccValidation;
-    }
-    if (nameValidation === true && emailValidation === true && activitiesValidation === true){
-        return true;
-    }    else {
+        if ($ccNum.val().length > 0 && $isValid == true){
+            $('.error-message').css({"display":"none"});
+            $ccNum.css({"border":"none"}); 
+            return true;
+        } else {
+            $ccNum.after($('<div class="error-message" display="block">Please enter a valid credit card number.</div>'));
+            $ccNum.css({"border":"red solid 2px","margin-bottom":"0"});   
             return false;
         }
     }
 
+    //test zip function
+    const zipValid = () =>{
+        const $pattern = /^[0-9]{5}$/;
+        const $isValid = $pattern.test($zip.val());
+        if ($zip.val().length > 0 && $isValid == true){
+            $('.error-message').css({"display":"none"});
+            $zip.css({"border":"none"}); 
+            return true;
+        } else {
+            $zip.after($('<div class="error-message" display="block">Please enter a valid zip code.</div>'));
+            $zip.css({"border":"red solid 2px","margin-bottom":"0"});   
+            return false;
+        }
+    }
+
+    //test cvv function
+    const cvvValid = () =>{
+        const $pattern = /^[0-9]{3}$/;
+        const $isValid = $pattern.test($cvv.val());
+        if ($cvv.val().length > 0 && $isValid == true){
+            $('.error-message').css({"display":"none"});
+            $cvv.css({"border":"none"}); 
+            return true;
+        } else {
+            $cvv.after($('<div class="error-message" display="block">Please enter a CVV code.</div>'));
+            $cvv.css({"border":"red solid 2px","margin-bottom":"0"});   
+            return false;
+        }
+    }
+
+    //call all three functions
+    ccNumValid();
+    zipValid();
+    cvvValid();
+}
+
+const masterValidation = () => {
+    nameValidation();
+    emailValidation();
+    activitiesValidation();
+    console.log($paymentOptions.val());
+    if ($paymentOptions.val()==='Credit Card'){
+        ccValidation();
+    }
+    // if (nameValidation === true && emailValidation === true && activitiesValidation === true){
+    //     return true;
+    // }    else {
+    //         return false;
+    //     }
+    // }
+}
 
 //const $button = $('button')
 $('form').submit(function(event) {
     event.preventDefault();
-    console.log("Submit has been clicked");
-    nameValidation();
-    emailValidation();
-    activitiesValidation();
-    ccValidation();
+    // nameValidation();
+    // emailValidation();
+    // activitiesValidation();
+    // ccValidation();
+    masterValidation();
     $('.error-message').css({"color":"red"});
  });
