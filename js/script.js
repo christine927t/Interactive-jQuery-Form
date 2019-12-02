@@ -108,7 +108,7 @@ $payment.on('change',function(event){
         $('#credit-card').hide();
         $('#paypal').hide();
         $('#bitcoin').show();
-    } console.log($(event.target).val())
+    } console.log($(event.target).val());
     $paymentSel = $(event.target);
 })
 
@@ -122,11 +122,13 @@ const nameValidation = () => {
         {} else {
             $name.before($('<div class="error-message" id="error-name" display="block">Please enter your name</div>'));
             $name.css("border","red solid 2px");
+            console.log(false + " name is not valid")
             return false;
         }
     } else {
         $('.error-message').css({"display":"none"});
         $name.css({"border":"none"});
+        console.log(true + " name IS valid");
         return true;
     }
 }
@@ -139,12 +141,14 @@ const emailValidation = () => {
     if ($email.val().length > 0 && $isValid == true){
         $('.error-message').css({"display":"none"});
         $email.css({"border":"none"});
+        console.log(true  + " email is valid");
         return true;
     } else {
         if($('#error-email').length > 0)
         {} else {
             $email.before($('<div class="error-message" id="error-email" display="block">Please enter a valid email address</div>'));
             $email.css("border","red solid 2px");
+            console.log(false  + " email is not valid");
             return false;
         }
     }
@@ -164,10 +168,12 @@ const activitiesValidation = () => {
         if($('#error-act').length > 0)
         {} else {
             $actLegend.append($('<div class="error-message" id="error-act" display="block">Please register for at least one activity.</div>'));
+            console.log(false  + " actvities are not valid");
             return false;
         }
     } else {
         $('.error-message').css({"display":"none"});
+        console.log(true  + " actvities are valid");
         return true;
     }
 }
@@ -186,12 +192,14 @@ const ccValidation = () => {
         if ($ccNum.val().length > 0 && $isValid == true){
             $('.error-message').css({"display":"none"});
             $ccNum.css({"border":"none"}); 
+            console.log(true   + " ccnumber is valid");
             return true;
         } else {
             if($('#error-cc').length > 0)
             {} else {
                 $ccNum.after($('<div class="error-message" id="error-cc" display="block">Please enter a valid credit card number.</div>'));
-                $ccNum.css({"border":"red solid 2px","margin-bottom":"0"});   
+                $ccNum.css({"border":"red solid 2px","margin-bottom":"0"});  
+                console.log(false  + " ccnumber is not valid"); 
                 return false;
             }
         }
@@ -204,12 +212,14 @@ const ccValidation = () => {
         if ($zip.val().length > 0 && $isValid == true){
             $('.error-message').css({"display":"none"});
             $zip.css({"border":"none"}); 
+            console.log(true  + " zip is valid"); 
             return true;
         } else {
             if($('#error-zip').length > 0)
             {} else {
                 $zip.after($('<div class="error-message" id="error-zip" display="block">Please enter a valid zip code.</div>'));
-                $zip.css({"border":"red solid 2px","margin-bottom":"0"});   
+                $zip.css({"border":"red solid 2px","margin-bottom":"0"}); 
+                console.log(false  + " zip is not valid");   
                 return false;
             }
         }
@@ -222,12 +232,14 @@ const ccValidation = () => {
         if ($cvv.val().length > 0 && $isValid == true){
             $('.error-message').css({"display":"none"});
             $cvv.css({"border":"none"}); 
+            console.log(true  + " cvv is valid"); 
             return true;
         } else {
             if($('#error-cvv').length > 0)
             {} else {
                 $cvv.after($('<div class="error-message" id="error-cvv" display="block">Please enter a CVV code.</div>'));
-                $cvv.css({"border":"red solid 2px","margin-bottom":"0"});   
+                $cvv.css({"border":"red solid 2px","margin-bottom":"0"});
+                console.log(false  + " cvv is not valid");    
                 return false;
             }
         }
@@ -247,23 +259,17 @@ const masterValidation = () => {
         console.log($paymentSel.val());
         ccValidation();
     }
-
-
-    // if (nameValidation === true && emailValidation === true && activitiesValidation === true){
-    //     return true;
-    // }    else {
-    //         return false;
-    //     }
-    // }
+    if (nameValidation() && emailValidation() && activitiesValidation()){
+       console.log(true);
+    }    else {
+            console.log(false);
+        }
 }
 
-//const $button = $('button')
+//submit handler on button//
 $('form').submit(function(event) {
     event.preventDefault();
-    // nameValidation();
-    // emailValidation();
-    // activitiesValidation();
-    // ccValidation();
+    //nameValidation();
     masterValidation();
     $('.error-message').css({"color":"red"});
  });
