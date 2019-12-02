@@ -12,10 +12,6 @@
 body,
 input,
 button {
-	/*font-family: 'Nunito', sans-serif;*/
-	/*font-family: 'Montserrat';*/
-	/*font-family: 'Alatsi', sans-serif;*/
-	/*font-family: 'Bebas+Neue', sans-serif;*/
 	font-family: 'Raleway', sans-serif;
 }
 
@@ -24,6 +20,7 @@ body {
   	/*color: rgba(6, 49, 68, 0.9);*/
   	color: rgb(141, 174, 221);
 	/*background: #CDE0FB;*/
+	background: rgb(250, 246, 2);
 	background: #fff;
 }
 

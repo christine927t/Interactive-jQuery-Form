@@ -138,7 +138,7 @@ const nameValidation = () => {
         if($('#error-name').length > 0)
         {} else {
             $name.before($('<div class="error-message" id="error-name">Please enter your name</div>'));
-            $name.css("border","red solid 2px");
+            $name.css("border","yellow solid 2px");
             return false;
         }
     } else {
@@ -160,7 +160,7 @@ const emailValidation = () => {
         if($('#error-email').length > 0)
         {} else {
             $email.before($('<div class="error-message" id="error-email">Please enter a valid email address</div>'));
-            $email.css("border","red solid 2px");
+            $email.css("border","yellow solid 2px");
             return false;
         }
     }
@@ -222,7 +222,7 @@ const ccValidation = () => {
             if($('#error-cc').length > 0)
             {} else {
                 $ccNum.after($('<div class="error-message" id="error-cc">Please enter a valid credit card number.</div>'));
-                $ccNum.css({"border":"red solid 2px","margin-bottom":"2px"});  
+                $ccNum.css({"border":"yellow solid 2px","margin-bottom":"2px"});  
                 return false;
             }
         }
@@ -240,7 +240,7 @@ const ccValidation = () => {
             if($('#error-zip').length > 0)
             {} else {
                 $zip.after($('<div class="error-message" id="error-zip">Please enter a valid zip code.</div>'));
-                $zip.css({"border":"red solid 2px","margin-bottom":"0"}); 
+                $zip.css({"border":"yellow solid 2px","margin-bottom":"2px"}); 
                 return false;
             }
         }
@@ -258,7 +258,7 @@ const ccValidation = () => {
             if($('#error-cvv').length > 0)
             {} else {
                 $cvv.after($('<div class="error-message" id="error-cvv">Please enter a CVV code.</div>'));
-                $cvv.css({"border":"red solid 2px","margin-bottom":"0"});
+                $cvv.css({"border":"yellow solid 2px","margin-bottom":"2px"});
                 return false;
             }
         }
@@ -282,5 +282,5 @@ const masterValidation = () => {
 $('form').submit(function(event) {
     event.preventDefault();
     masterValidation();
-    $('.error-message').css({"color":"red"});
+    $('.error-message').css({"color":"yellow"});
  });
