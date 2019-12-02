@@ -3,13 +3,13 @@ $(document).ready(function() {
 });
 
 ///////////***********Email Section*******////////////
+/////REAL TIME VALIDATION ON EMAIL////
 const $email = $('#mail');
-const $emailTip = $('<div id="email-tip" display="block">Please enter your email address</div>');
+const $emailTip = $('<div id="email-tip">Please enter your email address</div>');
 
 $('#mail').focus(function(){
-    console.log("focus on email")
-    $email.before($emailTip);
-
+    $email.before($emailTip).fadeIn(1000);
+    $('#email-tip').css({"font-size":".80em","font-weight":"bold"});
     $('#mail').keyup(function(){
         const $pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         const $isValid = $pattern.test($email.val());
@@ -17,12 +17,7 @@ $('#mail').focus(function(){
             $emailTip.css("display","none");
         }
     })    
-
 });
-
-// $($email).on('focusout',function(){
-//     $(this).siblings($emailTip).hide();
-// })
 
 ///////////***********Job Role Section*******////////////
 //hide 'other' input on load
@@ -39,6 +34,8 @@ $jobSelect.on('change', function(event){
  });
 
 ///////////*********T-Shirt section*********////////////
+//hide Color menu input on load
+$('#colors-js-puns').hide();
 
 //hide 'select theme' in design menu
 const $designSelect = $('#design');
@@ -54,6 +51,7 @@ $colorSelect.children().hide();
 
 //change color dropdown options when design is chosen
 $designSelect.on('change',function(event){
+    $('#colors-js-puns').show();
     $colorPlaceholder.remove();
     if ($(event.target).val()==='js puns'){
         $colorSelectOptions.eq(0).prop('selected',true);
@@ -108,7 +106,6 @@ $('.activities').on('change',function(event){
 })
 
 ///////////*********Payment section*********////////////
-
 const $payment = $('#payment');
 const $paymentOptions = $('#payment option');
 $paymentOptions.eq(0).hide();
@@ -140,7 +137,7 @@ const nameValidation = () => {
     if (($name).val().length === 0) {
         if($('#error-name').length > 0)
         {} else {
-            $name.before($('<div class="error-message" id="error-name" display="block">Please enter your name</div>'));
+            $name.before($('<div class="error-message" id="error-name">Please enter your name</div>'));
             $name.css("border","red solid 2px");
             return false;
         }
@@ -162,7 +159,7 @@ const emailValidation = () => {
     } else {
         if($('#error-email').length > 0)
         {} else {
-            $email.before($('<div class="error-message" id="error-email" display="block">Please enter a valid email address</div>'));
+            $email.before($('<div class="error-message" id="error-email">Please enter a valid email address</div>'));
             $email.css("border","red solid 2px");
             return false;
         }
@@ -182,7 +179,7 @@ const activitiesValidation = () => {
     if ($numChecked < 1){
         if($('#error-act').length > 0)
         {} else {
-            $actLegend.append($('<div class="error-message" id="error-act" display="block">Please register for at least one activity.</div>'));
+            $actLegend.append($('<div class="error-message" id="error-act">Please register for at least one activity.</div>'));
             return false;
         }
     } else {
@@ -191,17 +188,32 @@ const activitiesValidation = () => {
     }
 }
 
+////////////credit card/////////////
+const $creditCard = $('#credit-card');
+const $ccNum = $('#cc-num');
+const $zip = $('#zip');
+const $cvv = $('#cvv');
+
+/////CONDITIONAL ERROR MESSAGE/////
+const $ccTip1 = $('<div class="cc-tip">Enter a CC number at least 13 numbers long.</div>');
+$ccNum.css({"margin-bottom":"2px"}); 
+
+$('#cc-num').keydown(function(){
+    console.log($ccNum.val())
+    if ($ccNum.val().length < 13){
+        $ccNum.after($ccTip1).fadeIn(1000);
+        $('.cc-tip').css({"font-size":".80em","font-weight":"bold"});
+    } else {
+        $ccTip1.css("display","none");
+    }
+})  
+
 //validation for credit card
 const ccValidation = () => {
-    const $creditCard = $('#credit-card');
-    const $ccNum = $('#cc-num');
-    const $zip = $('#zip');
-    const $cvv = $('#cvv');
-
     //test cc num function
     const ccNumValid = () =>{
-        const $pattern = /^[0-9]{13,16}$/;
-        const $isValid = $pattern.test($ccNum.val());
+        // const $pattern = /^[0-9]{13,16}$/;
+        // const $isValid = $pattern.test($ccNum.val());
         if ($ccNum.val().length > 0 && $isValid == true){
             $('.error-message').css({"display":"none"});
             $ccNum.css({"border":"none"}); 
@@ -209,8 +221,8 @@ const ccValidation = () => {
         } else {
             if($('#error-cc').length > 0)
             {} else {
-                $ccNum.after($('<div class="error-message" id="error-cc" display="block">Please enter a valid credit card number.</div>'));
-                $ccNum.css({"border":"red solid 2px","margin-bottom":"0"});  
+                $ccNum.after($('<div class="error-message" id="error-cc">Please enter a valid credit card number.</div>'));
+                $ccNum.css({"border":"red solid 2px","margin-bottom":"2px"});  
                 return false;
             }
         }
@@ -227,7 +239,7 @@ const ccValidation = () => {
         } else {
             if($('#error-zip').length > 0)
             {} else {
-                $zip.after($('<div class="error-message" id="error-zip" display="block">Please enter a valid zip code.</div>'));
+                $zip.after($('<div class="error-message" id="error-zip">Please enter a valid zip code.</div>'));
                 $zip.css({"border":"red solid 2px","margin-bottom":"0"}); 
                 return false;
             }
@@ -245,7 +257,7 @@ const ccValidation = () => {
         } else {
             if($('#error-cvv').length > 0)
             {} else {
-                $cvv.after($('<div class="error-message" id="error-cvv" display="block">Please enter a CVV code.</div>'));
+                $cvv.after($('<div class="error-message" id="error-cvv">Please enter a CVV code.</div>'));
                 $cvv.css({"border":"red solid 2px","margin-bottom":"0"});
                 return false;
             }
