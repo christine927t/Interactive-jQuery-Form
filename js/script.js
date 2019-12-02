@@ -2,8 +2,29 @@ $(document).ready(function() {
     $('#name').focus();
 });
 
-///////////***********Job Role Section*******////////////
+///////////***********Email Section*******////////////
+const $email = $('#mail');
+const $emailTip = $('<div id="email-tip" display="block">Please enter your email address</div>');
 
+$('#mail').focus(function(){
+    console.log("focus on email")
+    $email.before($emailTip);
+
+    $('#mail').keyup(function(){
+        const $pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const $isValid = $pattern.test($email.val());
+        if ($isValid) {
+            $emailTip.css("display","none");
+        }
+    })    
+
+});
+
+// $($email).on('focusout',function(){
+//     $(this).siblings($emailTip).hide();
+// })
+
+///////////***********Job Role Section*******////////////
 //hide 'other' input on load
 $('#other-title').hide();
 //click handler for 'other' job role option
@@ -72,8 +93,6 @@ $('.activities').on('change',function(event){
         } else if ($clicked.eq(i).prop('checked')===false){
             $storeTotal = $storeTotal - $clickedCostNum;
         } 
-  
-    console.log("The new total is: " +$storeTotal);
     $(totalCost).html('<span>Total Cost: $'+ $storeTotal +'</span>');
       
     //dealing with conflicting activities day/time//
@@ -92,8 +111,9 @@ $('.activities').on('change',function(event){
 
 const $payment = $('#payment');
 const $paymentOptions = $('#payment option');
-let $paymentSel;
 $paymentOptions.eq(0).hide();
+$paymentOptions.eq(1).prop('selected',true);
+let $paymentSel = $("#payment option:selected").val();
 
 $payment.on('change',function(event){
     if ($(event.target).val()=== 'Credit Card'){
@@ -108,8 +128,8 @@ $payment.on('change',function(event){
         $('#credit-card').hide();
         $('#paypal').hide();
         $('#bitcoin').show();
-    } console.log($(event.target).val());
-    $paymentSel = $(event.target);
+    } 
+   $paymentSel = $(event.target);
 })
 
 ///////////*********Validation section*********////////////
@@ -122,33 +142,28 @@ const nameValidation = () => {
         {} else {
             $name.before($('<div class="error-message" id="error-name" display="block">Please enter your name</div>'));
             $name.css("border","red solid 2px");
-            console.log(false + " name is not valid")
             return false;
         }
     } else {
         $('.error-message').css({"display":"none"});
         $name.css({"border":"none"});
-        console.log(true + " name IS valid");
         return true;
     }
 }
 
 //validation for email
 const emailValidation = () => {
-    const $email = $('#mail');
     const $pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const $isValid = $pattern.test($email.val());
-    if ($email.val().length > 0 && $isValid == true){
+    if ($isValid){
         $('.error-message').css({"display":"none"});
         $email.css({"border":"none"});
-        console.log(true  + " email is valid");
         return true;
     } else {
         if($('#error-email').length > 0)
         {} else {
             $email.before($('<div class="error-message" id="error-email" display="block">Please enter a valid email address</div>'));
             $email.css("border","red solid 2px");
-            console.log(false  + " email is not valid");
             return false;
         }
     }
@@ -168,12 +183,10 @@ const activitiesValidation = () => {
         if($('#error-act').length > 0)
         {} else {
             $actLegend.append($('<div class="error-message" id="error-act" display="block">Please register for at least one activity.</div>'));
-            console.log(false  + " actvities are not valid");
             return false;
         }
     } else {
         $('.error-message').css({"display":"none"});
-        console.log(true  + " actvities are valid");
         return true;
     }
 }
@@ -192,14 +205,12 @@ const ccValidation = () => {
         if ($ccNum.val().length > 0 && $isValid == true){
             $('.error-message').css({"display":"none"});
             $ccNum.css({"border":"none"}); 
-            console.log(true   + " ccnumber is valid");
             return true;
         } else {
             if($('#error-cc').length > 0)
             {} else {
                 $ccNum.after($('<div class="error-message" id="error-cc" display="block">Please enter a valid credit card number.</div>'));
                 $ccNum.css({"border":"red solid 2px","margin-bottom":"0"});  
-                console.log(false  + " ccnumber is not valid"); 
                 return false;
             }
         }
@@ -212,14 +223,12 @@ const ccValidation = () => {
         if ($zip.val().length > 0 && $isValid == true){
             $('.error-message').css({"display":"none"});
             $zip.css({"border":"none"}); 
-            console.log(true  + " zip is valid"); 
             return true;
         } else {
             if($('#error-zip').length > 0)
             {} else {
                 $zip.after($('<div class="error-message" id="error-zip" display="block">Please enter a valid zip code.</div>'));
                 $zip.css({"border":"red solid 2px","margin-bottom":"0"}); 
-                console.log(false  + " zip is not valid");   
                 return false;
             }
         }
@@ -232,19 +241,16 @@ const ccValidation = () => {
         if ($cvv.val().length > 0 && $isValid == true){
             $('.error-message').css({"display":"none"});
             $cvv.css({"border":"none"}); 
-            console.log(true  + " cvv is valid"); 
             return true;
         } else {
             if($('#error-cvv').length > 0)
             {} else {
                 $cvv.after($('<div class="error-message" id="error-cvv" display="block">Please enter a CVV code.</div>'));
                 $cvv.css({"border":"red solid 2px","margin-bottom":"0"});
-                console.log(false  + " cvv is not valid");    
                 return false;
             }
         }
     }
-
     //call all three functions
     ccNumValid();
     zipValid();
@@ -255,21 +261,14 @@ const masterValidation = () => {
     nameValidation();
     emailValidation();
     activitiesValidation();
-    if ($paymentSel.val()=== 'Credit Card'){
-        console.log($paymentSel.val());
+    if ($paymentSel === 'Credit Card'){
         ccValidation();
-    }
-    if (nameValidation() && emailValidation() && activitiesValidation()){
-       console.log(true);
-    }    else {
-            console.log(false);
-        }
+    } 
 }
 
 //submit handler on button//
 $('form').submit(function(event) {
     event.preventDefault();
-    //nameValidation();
     masterValidation();
     $('.error-message').css({"color":"red"});
  });
