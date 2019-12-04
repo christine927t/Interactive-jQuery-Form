@@ -1,5 +1,7 @@
 $(document).ready(function() {
     $('#name').focus();
+    $('#paypal').hide();
+    $('#bitcoin').hide();
 });
 
 ///////////***********Email Section*******////////////
@@ -129,6 +131,27 @@ $payment.on('change',function(event){
    $paymentSel = $(event.target);
 })
 
+////////////credit card/////////////
+const $creditCard = $('#credit-card');
+const $ccNum = $('#cc-num');
+const $zip = $('#zip');
+const $cvv = $('#cvv');
+
+/////CONDITIONAL ERROR MESSAGE/////
+const $ccTip1 = $('<div class="cc-tip">Enter a CC number at least 13 numbers long.</div>');
+$ccNum.css({"margin-bottom":"2px"}); 
+
+$('#cc-num').keydown(function(){
+    console.log($ccNum.val())
+    if ($ccNum.val().length < 13){
+        $ccNum.after($ccTip1).fadeIn(1000);
+        $('.cc-tip').css({"font-size":".80em","font-weight":"bold"});
+    } else {
+        $ccTip1.css("display","none");
+    }
+})  
+
+
 ///////////*********Validation section*********////////////
 
 //validation for name
@@ -188,25 +211,6 @@ const activitiesValidation = () => {
     }
 }
 
-////////////credit card/////////////
-const $creditCard = $('#credit-card');
-const $ccNum = $('#cc-num');
-const $zip = $('#zip');
-const $cvv = $('#cvv');
-
-/////CONDITIONAL ERROR MESSAGE/////
-const $ccTip1 = $('<div class="cc-tip">Enter a CC number at least 13 numbers long.</div>');
-$ccNum.css({"margin-bottom":"2px"}); 
-
-$('#cc-num').keydown(function(){
-    console.log($ccNum.val())
-    if ($ccNum.val().length < 13){
-        $ccNum.after($ccTip1).fadeIn(1000);
-        $('.cc-tip').css({"font-size":".80em","font-weight":"bold"});
-    } else {
-        $ccTip1.css("display","none");
-    }
-})  
 
 //validation for credit card
 const ccValidation = () => {
@@ -276,6 +280,12 @@ const masterValidation = () => {
     if ($paymentSel === 'Credit Card'){
         ccValidation();
     } 
+
+    if(nameValidation() && emailValidation()  && activitiesValidation() && ccValidation()){
+        return true;
+    } else {
+        return false;
+    }
 }
 
 //submit handler on button//
