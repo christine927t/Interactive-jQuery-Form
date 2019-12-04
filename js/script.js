@@ -2,6 +2,8 @@ $(document).ready(function() {
     $('#name').focus();
     $('#paypal').hide();
     $('#bitcoin').hide();
+    $('#colors-js-puns').hide();
+    $('#other-title').hide();
 });
 
 ///////////***********Email Section*******////////////
@@ -22,8 +24,6 @@ $('#mail').focus(function(){
 });
 
 ///////////***********Job Role Section*******////////////
-//hide 'other' input on load
-$('#other-title').hide();
 //click handler for 'other' job role option
 const $jobSelect = $('#title');
 //const $jobOption = $('#title option');
@@ -36,9 +36,6 @@ $jobSelect.on('change', function(event){
  });
 
 ///////////*********T-Shirt section*********////////////
-//hide Color menu input on load
-$('#colors-js-puns').hide();
-
 //hide 'select theme' in design menu
 const $designSelect = $('#design');
 const $designSelectOptions = $('#design option');
@@ -69,7 +66,6 @@ $designSelect.on('change',function(event){
 });
 
 ///////////*********Activities section*********////////////
-
 //create an element to display the total activity cost
 let $storeTotal = 0;
 let totalCost = document.createElement("span"); 
@@ -130,27 +126,6 @@ $payment.on('change',function(event){
     } 
    $paymentSel = $(event.target);
 })
-
-////////////credit card/////////////
-const $creditCard = $('#credit-card');
-const $ccNum = $('#cc-num');
-const $zip = $('#zip');
-const $cvv = $('#cvv');
-
-/////CONDITIONAL ERROR MESSAGE/////
-const $ccTip1 = $('<div class="cc-tip">Enter a CC number at least 13 numbers long.</div>');
-$ccNum.css({"margin-bottom":"2px"}); 
-
-$('#cc-num').keydown(function(){
-    console.log($ccNum.val())
-    if ($ccNum.val().length < 13){
-        $ccNum.after($ccTip1).fadeIn(1000);
-        $('.cc-tip').css({"font-size":".80em","font-weight":"bold"});
-    } else {
-        $ccTip1.css("display","none");
-    }
-})  
-
 
 ///////////*********Validation section*********////////////
 
@@ -221,8 +196,8 @@ const $zip = $('#zip');
 const $cvv = $('#cvv');
 
 /////EXCEEDS - CONDITIONAL ERROR MESSAGE/////
-const $ccTip1 = $('<div class="cc-tip">Enter a CC number at least 13 digits long.</div>');
-const $ccTip2 = $('<div class="cc-tip">Enter a CC number less than 16 digits long.</div>');
+const $ccTip1 = $('<div class="cc-tip" id="cc-tip1">Enter a CC number at least 13 digits long.</div>');
+const $ccTip2 = $('<div class="cc-tip" id="cc-tip2">Enter a CC number less than 16 digits long.</div>');
 $('.cc-tip').css({"font-size":".80em","font-weight":"bold"});
 $ccNum.css({"margin-bottom":"2px"}); 
 
@@ -233,11 +208,14 @@ $('#cc-num').keydown(function(){
     const $isValid2 = $pattern2.test($ccNum.val()); //true/false
     if (!$isValid1) {
         $ccNum.after($ccTip1).fadeIn(1000);
-        $ccTip2.hide();
+        $('#cc-tip2').css({"display":"none"});
+        //$ccTip2.hide();
     }
     else if (!$isValid2 && $isValid1) {
         $ccNum.after($ccTip2).fadeIn(1000);
-        $ccTip1.hide();
+        $('#cc-tip1').css({"display":"block"});
+
+        //$ccTip1.hide();
         
     } 
     else {
