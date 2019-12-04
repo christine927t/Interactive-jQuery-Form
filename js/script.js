@@ -275,6 +275,7 @@ const ccValidation = () => {
 
 const masterValidation = () => {
     nameValidation();
+    console.log(name)
     emailValidation();
     activitiesValidation();
     if ($paymentSel === 'Credit Card'){
