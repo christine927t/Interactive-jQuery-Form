@@ -226,7 +226,9 @@ $('#cc-num').keyup(function(){
 
 
 //validation for credit card
+let called = false;
 const ccValidation = () => {
+    called = true;
     //test cc num function
     const ccNumValid = () =>{
         const $pattern = /^[0-9]{13,16}$/;
@@ -241,6 +243,8 @@ const ccValidation = () => {
             } else {
                 $ccNum.after($('<div class="error-message" id="error-cc">Please enter a valid credit card number.</div>'));
                 $ccNum.css({"border":"red solid 2px","margin-bottom":"2px"});  
+                console.log(false +" ccValid")
+
                 return false;
             }
         }
@@ -260,6 +264,7 @@ const ccValidation = () => {
             } else {
                 $zip.after($('<div class="error-message" id="error-zip">Please enter a valid zip code.</div>'));
                 $zip.css({"border":"red solid 2px","margin-bottom":"2px"}); 
+                console.log(false +" zipValid")
                 return false;
             }
         }
@@ -279,6 +284,7 @@ const ccValidation = () => {
             } else {
                 $cvv.after($('<div class="error-message" id="error-cvv">Please enter a CVV code.</div>'));
                 $cvv.css({"border":"red solid 2px","margin-bottom":"2px"});
+                console.log(false +" cvvValid")
                 return false;
             }
         }
@@ -291,6 +297,7 @@ const ccValidation = () => {
     if (ccNumValid() && zipValid() && cvvValid()){
         return true;
     }   else {
+        console.log('ccValidation is false')
         return false;
     }
 }
@@ -302,17 +309,30 @@ const masterValidation = () => {
     if ($paymentSel === 'Credit Card'){
         ccValidation();
     }
+    console.log(ccValidation().val);
+    console.log(called)
 
-    if (nameValidation() && emailValidation() && activitiesValidation() && ccValidation()){
+    if (nameValidation() && emailValidation() && activitiesValidation() && (called) && ccValidation()){
+        console.log(called + ' ccValidation was called and everything is true');
         return true;
+    } else if (nameValidation() && emailValidation() && activitiesValidation() && !(called)){
+        console.log(called + ' ccValidation was not called but everything else is true');
+        return true;
+    } else if (nameValidation() && emailValidation() && activitiesValidation() && (called) && !ccValidation()){
+        console.log(called + ' ccValidation was called but cc is not valid');
+        return false;
     } else {
+        console.log(called + ' ccValidation was not called but everything is false')
         return false;
     }
 }
 
+
 //submit handler on button//
 $('form').submit(function(event) {
     if (masterValidation()){
+        console.log('Master validation ran correctly')
+        event.preventDefault();
         return true;
     } else {
         event.preventDefault();
