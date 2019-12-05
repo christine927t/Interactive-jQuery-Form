@@ -6,8 +6,9 @@ $(document).ready(function() {
     $('#other-title').hide();
 });
 
-///////////***********Email Section*******////////////
-/////REAL TIME VALIDATION ON EMAIL////
+///////////EMAIL SECTION////////////
+//EXCEEDS - REAL TIME ERROR MESSAGE//
+////////////////////////////////////
 const $email = $('#mail');
 const $emailTip = $('<div id="email-tip">Please enter your email address</div>');
 
@@ -23,10 +24,9 @@ $('#mail').focus(function(){
     })    
 });
 
-///////////***********Job Role Section*******////////////
+///////////JOB ROLE SECTION////////////
 //click handler for 'other' job role option
 const $jobSelect = $('#title');
-//const $jobOption = $('#title option');
 $jobSelect.on('change', function(event){
     if ($(event.target).val()==='other'){
     $('#other-title').show();
@@ -35,7 +35,7 @@ $jobSelect.on('change', function(event){
     }
  });
 
-///////////*********T-Shirt section*********////////////
+///////////T-SHIRT SECTION////////////
 //hide 'select theme' in design menu
 const $designSelect = $('#design');
 const $designSelectOptions = $('#design option');
@@ -58,14 +58,14 @@ $designSelect.on('change',function(event){
         $('#color option:gt(0)') && $('#color option:lt(3)').show();
         
         
-    } else {//($(event.target).val()==='heart js'){
+    } else {
         $colorSelectOptions.eq(3).prop('selected',true);
         $('#color option:gt(2)') && $('#color option:lt(6)').show();
         $('#color option:gt(0)') && $('#color option:lt(3)').hide();
     }
 });
 
-///////////*********Activities section*********////////////
+///////////ACTIVITIES SECTION////////////
 //create an element to display the total activity cost
 let $storeTotal = 0;
 let totalCost = document.createElement("span"); 
@@ -75,13 +75,13 @@ $('.activities').append(totalCost);
 let $checkbox = $('.activities input[type="checkbox"]');
 $('.activities').on('change',function(event){
     for (i = 0; i < $checkbox.length; i ++){
-        let $clicked = ($(event.target));   // target main e.target click
-        let $clickedCost = $clicked.attr('data-cost');  
-        let $clickedCostNum = parseInt($clickedCost.replace('$', '')); //clicked as num
+        let $clicked = ($(event.target)); 
+        let $clickedCost = $clicked.attr('data-cost');  //clicked cost
+        let $clickedCostNum = parseInt($clickedCost.replace('$', '')); //clicked cost as num
         let $clickedDayTime = $clicked.attr('data-day-and-time'); //clicked day/time
         let $checkboxDayTime = $checkbox.eq(i).data('day-and-time'); //checkbox day/time
-        let $checkboxCost = $checkbox.eq(i).data('cost');
-        let $checkboxCostNum = parseInt($checkboxCost.replace('$', ''));
+        let $checkboxCost = $checkbox.eq(i).data('cost'); //checkbox cost
+        let $checkboxCostNum = parseInt($checkboxCost.replace('$', '')); //checkbox cost as num
 
     //update $clickedCostNum based on activities checked
         if ($clicked.eq(i).prop('checked')) {
@@ -89,52 +89,46 @@ $('.activities').on('change',function(event){
         } else if ($clicked.eq(i).prop('checked')===false){
             $storeTotal = $storeTotal - $clickedCostNum;
         } 
-    $(totalCost).html('<span>Total Cost: $'+ $storeTotal +'</span>');
+        $(totalCost).html('<span>Total Cost: $'+ $storeTotal +'</span>');
       
     //dealing with conflicting activities day/time//
-    if ($clickedDayTime === $checkboxDayTime){
-        if ($clicked.prop('checked')){
-            $checkbox.eq(i).prop('disabled',true);
-        }   else {
-            $checkbox.eq(i).prop('disabled',false);
-        }          
-    }
+        if ($clickedDayTime === $checkboxDayTime){
+            if ($clicked.prop('checked')){
+                $checkbox.eq(i).prop('disabled',true);
+            }   else {
+                $checkbox.eq(i).prop('disabled',false);
+            }          
+        }      
     $clicked.prop('disabled',false);
     } 
 })
 
-///////////*********Payment section*********////////////
+///////////PAYMENT SECTION////////////
 const $payment = $('#payment');
 const $paymentOptions = $('#payment option');
 $paymentOptions.eq(0).hide();
 $paymentOptions.eq(1).prop('selected',true);
 let $paymentSel = $("#payment option:selected").val();
 let ccCalled = true;
-console.log('ccCalled starts out as ' + ccCalled)
-console.log($paymentSel)
 
+//payment input/text shown/hidden on change event of $payment dropdown//
 $payment.on('change',function(event){
     if ($(event.target).val()=== 'Credit Card'){
-        //ccCalled = true;
-        console.log('ccCalled for Credit Card is ' + ccCalled)
         $('#credit-card').show();
         $('#paypal').hide();
         $('#bitcoin').hide();
     } else if ($(event.target).val()=== 'PayPal'){
         ccCalled = false;
-        console.log('ccCalled for PayPal is ' + ccCalled)
         $('#credit-card').hide();
         $('#paypal').show();
         $('#bitcoin').hide();
     } else {
         ccCalled = false;
-        console.log('ccCalled for Bitcoin is ' + ccCalled)
         $('#credit-card').hide();
         $('#paypal').hide();
         $('#bitcoin').show();
     } 
    $paymentSel = $(event.target).val();
-   console.log($paymentSel);
 })
 
 /////////////////////////////////////
@@ -145,7 +139,7 @@ $payment.on('change',function(event){
 const nameValidation = () => {
     const $name = $('#name')
     if (($name).val().length === 0) {
-        if($('#error-name').length > 0)
+        if($('#error-name').length > 0) //checking if error already exists
         {   return false;
         } else {
             $name.before($('<div class="error-message" id="error-name">Please enter your name</div>'));
@@ -153,7 +147,7 @@ const nameValidation = () => {
             return false;
         }
     } else {
-        $('#error-name').css({"display":"none"});
+        $('#error-name').css({"display":"none"}); //removes error when length is != 0
         $name.css({"border":"none"});
         return true;
     }
@@ -162,13 +156,13 @@ const nameValidation = () => {
 //EMAIL VALIDATION//
 const emailValidation = () => {
     const $pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const $isValid = $pattern.test($email.val());
+    const $isValid = $pattern.test($email.val()); //tests for valid email entered
     if ($isValid){
-        $('#error-email').css({"display":"none"});
+        $('#error-email').css({"display":"none"}); //removes error when length is != 0
         $email.css({"border":"none"});
         return true;
     } else {
-        if($('#error-email').length > 0)
+        if($('#error-email').length > 0) //checking if error already exists
         {   return false;
         } else {
             $email.before($('<div class="error-message" id="error-email">Please enter a valid email address</div>'));
@@ -183,20 +177,20 @@ const activitiesValidation = () => {
     let $numChecked = 0;
     const $activities = $('.activities');
     const $actLegend = $('.activities legend');
-    for (i = 0; i < $checkbox.length; i ++){
+    for (i = 0; i < $checkbox.length; i ++){ //loops through checkbox items to check for 'checked' property
         if ($checkbox.eq(i).prop('checked')) {
             $numChecked = $numChecked + 1;
         } else {}
     }
     if ($numChecked < 1){
-        if($('#error-act').length > 0)
+        if($('#error-act').length > 0) //checking if error already exists
         {   return false;
-        } else {
+        } else { 
             $actLegend.append($('<div class="error-message" id="error-act">Please register for at least one activity.</div>'));
             return false;
         }
     } else {
-        $('#error-act').css({"display":"none"});
+        $('#error-act').css({"display":"none"}); //removes error when activities are valid
         return true;
     }
 }
@@ -214,8 +208,8 @@ const $ccTip2 = $('<div class="cc-tip" id="cc-tip2">Enter a CC number less than 
 $ccNum.css({"margin-bottom":"2px"}); 
 
 $('#cc-num').keyup(function(){
-    const $pattern1 = /^[0-9]{13,}$/;
-    const $pattern2 = /^[0-9]{17,}$/; 
+    const $pattern1 = /^[0-9]{13,}$/; //checks for at least 13 numbers entered
+    const $pattern2 = /^[0-9]{17,}$/; //checks for more than 16 numbers entered
     const $isValid1 = $pattern1.test($ccNum.val());//returns true/false
     const $isValid2 = $pattern2.test($ccNum.val());//returns true/false
     if (!$isValid1) {
