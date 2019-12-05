@@ -109,7 +109,7 @@ const $paymentOptions = $('#payment option');
 $paymentOptions.eq(0).hide();
 $paymentOptions.eq(1).prop('selected',true);
 let $paymentSel = $("#payment option:selected").val();
-let ccCalled = true;
+let ccCalled = true; //global var that will return true/false depending on whether ccValidation was called
 
 //payment input/text shown/hidden on change event of $payment dropdown//
 $payment.on('change',function(event){
@@ -213,20 +213,20 @@ $('#cc-num').keyup(function(){
     const $isValid1 = $pattern1.test($ccNum.val());//returns true/false
     const $isValid2 = $pattern2.test($ccNum.val());//returns true/false
     if (!$isValid1) {
-        $ccNum.after($ccTip1).fadeIn(1000);
+        $ccNum.after($ccTip1).fadeIn(1000); //13+ error shows up
         $('.cc-tip').css({"font-size":".80em","font-weight":"bold"});
         $('#cc-tip2').css({"display":"none"});
     }
-    else if ($isValid1){
+    else if ($isValid1){ //13+ error leaves
         $('#cc-tip1').css({"display":"none"});
     }
     if ($isValid2) {
-        $ccNum.after($ccTip2).fadeIn(1000);
+        $ccNum.after($ccTip2).fadeIn(1000); //<16 error shows up
         $('.cc-tip').css({"font-size":".80em","font-weight":"bold"});
         $('#cc-tip1').css({"display":"none"});
     } 
     else {
-        $('#cc-tip2').css({"display":"none"});
+        $('#cc-tip2').css({"display":"none"}); //<16 error leaves
     }
 
  }) 
@@ -236,14 +236,14 @@ $('#cc-num').keyup(function(){
 const ccValidation = () => {
     //TEST CC NUMBER INPUT
     const ccNumValid = () =>{
-        const $pattern = /^[0-9]{13,16}$/;
+        const $pattern = /^[0-9]{13,16}$/; //checks for between 13 and 16 numbers being entered
         const $isValid = $pattern.test($ccNum.val());
         if ($ccNum.val().length > 0 && $isValid == true){
             $('#error-cc').css({"display":"none"});
             $ccNum.css({"border":"none"}); 
             return true;
         } else {
-            if($('#error-cc').length > 0)
+            if($('#error-cc').length > 0) //checks for error message already existing
             {   return false;
             } else {
                 $ccNum.after($('<div class="error-message" id="error-cc">Please enter a valid credit card number.</div>'));
@@ -255,14 +255,14 @@ const ccValidation = () => {
 
     //TEST ZIP INPUT
     const zipValid = () =>{
-        const $pattern = /^[0-9]{5}$/;
-        const $isValid = $pattern.test($zip.val());
+        const $pattern = /^[0-9]{5}$/; //checks for exactly 5 numbers being entered
+        const $isValid = $pattern.test($zip.val()); 
         if ($zip.val().length > 0 && $isValid == true){
             $('#error-zip').css({"display":"none"});
             $zip.css({"border":"none"}); 
             return true;
         } else {
-            if($('#error-zip').length > 0)
+            if($('#error-zip').length > 0) //checks for error message already existing
             {   return false;
             } else {
                 $zip.after($('<div class="error-message" id="error-zip">Please enter a valid zip code.</div>'));
@@ -274,14 +274,14 @@ const ccValidation = () => {
 
     //TEST CVV INPUT
     const cvvValid = () =>{
-        const $pattern = /^[0-9]{3}$/;
+        const $pattern = /^[0-9]{3}$/; //checks for exactly 3 numbers being entered
         const $isValid = $pattern.test($cvv.val());
         if ($cvv.val().length > 0 && $isValid == true){
             $('#error-cvv').css({"display":"none"});
             $cvv.css({"border":"none"}); 
             return true;
         } else {
-            if($('#error-cvv').length > 0)
+            if($('#error-cvv').length > 0) //checks for error message already existing
             {   return false;
             } else {
                 $cvv.after($('<div class="error-message" id="error-cvv">Please enter a CVV code.</div>'));
@@ -290,13 +290,13 @@ const ccValidation = () => {
             }
         }
     }
-    //call all three functions
+    //CALL ALL THREE INDIVIDUAL FUNCTIONS FOR CC VALIDATION
     ccNumValid();
     zipValid();
     cvvValid();
 
-    if (ccNumValid() && zipValid() && cvvValid()){
-        return true;
+    if (ccNumValid() && zipValid() && cvvValid()){ //checks for all three validations returning true
+        return true; 
     }   else {
         return false;
     }
@@ -307,39 +307,28 @@ const masterValidation = () => {
     emailValidation();
     activitiesValidation();
 
-    if (ccCalled){
+    if (ccCalled){ //if ccCalled is true, credit card is selected and ccValidation needs to be called
         ccValidation();
-        console.log(ccCalled)
-        console.log('CC validation is '+ ccValidation())
     } else {
-        console.log('ccCalled is false' + ccCalled)
-
     }
-    //console.log(ccValidation);
-    console.log(ccCalled)
 
     if (nameValidation() && emailValidation() && activitiesValidation() && (ccCalled) && ccValidation()){
-        console.log(ccCalled + ' ccValidation was ccCalled and everything is true');
         return true;
     } else if (nameValidation() && emailValidation() && activitiesValidation() && !(ccCalled)){
-        console.log(ccCalled + ' ccValidation was not ccCalled but everything else is true');
         return true;
     } else if (nameValidation() && emailValidation() && activitiesValidation() && (ccCalled) && !ccValidation()){
-        console.log(ccCalled + ' ccValidation was ccCalled but cc is not valid');
         return false;
     } else {
-        console.log(ccCalled + ' ccValidation was ccCalled but everything is false')
         return false;
     }
     
 }
 
-
-//submit handler on button//
+//SUBMIT HANDLER ON BUTTON - CHECKS IF MASTERVALIDATION FUNCTION RETURNS TRUE//
 $('form').submit(function(event) {
     if (masterValidation()){
     } else {
-        event.preventDefault();
+        event.preventDefault(); 
         $('.error-message').css({"color":"red"});
     }
 });
