@@ -44,24 +44,21 @@ $designSelectOptions.eq(0).hide();
 //change default color dropdown option//hide all others
 const $colorSelect = $('#color');
 const $colorSelectOptions = $('#color option');
-const $colorPlaceholder = $("<option value='choosetheme' selected='selected'>Please select a T-shirt theme</option>");
-$colorSelect.prepend($colorPlaceholder);
-$colorSelect.children().hide();
+const $colorSelectPuns = $("#color option:contains('Puns')");
+const $colorSelectNotPuns = $("#color option:not(:contains('Puns'))");
 
 //change color dropdown options when design is chosen
 $designSelect.on('change',function(event){
     $('#colors-js-puns').show();
-    $colorPlaceholder.remove();
     if ($(event.target).val()==='js puns'){
-        $colorSelectOptions.eq(0).prop('selected',true);
-        $('#color option:gt(2)') && $('#color option:lt(6)').hide();
-        $('#color option:gt(0)') && $('#color option:lt(3)').show();
-        
+        $colorSelectPuns.eq(0).prop('selected',true);
+       $colorSelectPuns.show();
+       $colorSelectNotPuns.hide();
         
     } else {
-        $colorSelectOptions.eq(3).prop('selected',true);
-        $('#color option:gt(2)') && $('#color option:lt(6)').show();
-        $('#color option:gt(0)') && $('#color option:lt(3)').hide();
+        $colorSelectNotPuns.eq(0).prop('selected',true);
+        $colorSelectNotPuns.show();
+        $colorSelectPuns.hide();
     }
 });
 
