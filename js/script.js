@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#name').focus();
+    //$('#name').focus();
     $('#paypal').hide();
     $('#bitcoin').hide();
     $('#colors-js-puns').hide();
