@@ -140,7 +140,7 @@ const nameValidation = () => {
         {   return false;
         } else {
             $name.before($('<div class="error-message" id="error-name">Please enter your name</div>'));
-            $name.css("border","red solid 2px");
+            $name.css("border","#d86d09 solid 2px");
             return false;
         }
     } else {
@@ -163,7 +163,7 @@ const emailValidation = () => {
         {   return false;
         } else {
             $email.before($('<div class="error-message" id="error-email">Please enter a valid email address</div>'));
-            $email.css("border","red solid 2px");
+            $email.css("border","#d86d09 solid 2px");
             return false;
         }
     }
@@ -244,7 +244,7 @@ const ccValidation = () => {
             {   return false;
             } else {
                 $ccNum.after($('<div class="error-message" id="error-cc">Please enter a valid credit card number.</div>'));
-                $ccNum.css({"border":"red solid 2px","margin-bottom":"2px"});  
+                $ccNum.css({"border":"#d86d09 solid 2px","margin-bottom":"2px"});  
                 return false;
             }
         }
@@ -263,7 +263,7 @@ const ccValidation = () => {
             {   return false;
             } else {
                 $zip.after($('<div class="error-message" id="error-zip">Please enter a valid zip code.</div>'));
-                $zip.css({"border":"red solid 2px","margin-bottom":"2px"}); 
+                $zip.css({"border":"#d86d09 solid 2px","margin-bottom":"2px"}); 
                 return false;
             }
         }
@@ -282,7 +282,7 @@ const ccValidation = () => {
             {   return false;
             } else {
                 $cvv.after($('<div class="error-message" id="error-cvv">Please enter a CVV code.</div>'));
-                $cvv.css({"border":"red solid 2px","margin-bottom":"2px"});
+                $cvv.css({"border":"#d86d09 solid 2px","margin-bottom":"2px"});
                 return false;
             }
         }
@@ -326,6 +326,6 @@ $('form').submit(function(event) {
     if (masterValidation()){
     } else {
         event.preventDefault(); 
-        $('.error-message').css({"color":"red"});
+        $('.error-message').css({"color":"#d86d09"});
     }
 });

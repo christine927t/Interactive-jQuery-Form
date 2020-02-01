@@ -18,7 +18,6 @@ button {
 body {
   	font: 1em/1.5;
 	color:rgba(8, 63, 87, 0.7);
-
 	background: #fff;
 }
 
@@ -27,7 +26,8 @@ header {
 }
 
 h1 {
-	font-size: 2.5em;
+	font-size: 4em;
+	font-family: 'Knewave', cursive;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
 	margin: 0;
 }
@@ -36,13 +36,18 @@ a {
   text-decoration: none;
 }
 
+span {
+	font-size: 1.5em;
+}
+
 /* ================================= 
   Form Element Styles
 ==================================== */
 
 form {
 	padding: .875em 1.875em 1.875em;
-	background: #8abdd3;
+	/* background: #8abdd3; */
+	background: #f8f67c;
 	border: 2px solid rgba(8, 63, 87, 0.7);
 	border-radius: 3px;
 }
@@ -77,8 +82,7 @@ legend {
 }
 
 label {
-	/*color: #000;*/
-	color: rgb(238, 240, 241);
+	color: #3c494e;
 	display: block;
 	margin-bottom: .5em;
 }
@@ -111,13 +115,17 @@ input[type="radio"] {
 
 button {
 	color: #fff;
-	padding: .55em 1.25em;
+	letter-spacing: 3px;
+    font-size: 23px;
+    padding: 0.55em 0.5em;
 	background: #607781;
 	margin: 1.25em 0 .5em;
 	cursor: pointer;
 	border: 2px solid black;
 	border-radius: 4px;
 	transition: all 0.5s;
+	font-family: 'Knewave', cursive;
+
 }
 
 button:hover {
