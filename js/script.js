@@ -65,8 +65,12 @@ $designSelect.on('change',function(event){
 ///////////ACTIVITIES SECTION////////////
 //create an element to display the total activity cost
 let $storeTotal = 0;
-let totalCost = document.createElement("span"); 
-$('.activities').append(totalCost);
+let $totalCost = $("<span></span>"); 
+$('.activities').append($totalCost);
+// $('.activities').append(
+//     $('<span></span>')
+ 
+// )
 
 //listen for changes in the activity section
 let $checkbox = $('.activities input[type="checkbox"]');
@@ -86,7 +90,8 @@ $('.activities').on('change',function(event){
         } else if ($clicked.eq(i).prop('checked')===false){
             $storeTotal = $storeTotal - $clickedCostNum;
         } 
-        $(totalCost).html('<span class="cost">Total Cost: $'+ $storeTotal +'</span>');
+        // let $totalCost = $("<span></span>").html('<span class="cost">Total Cost: $'+ $storeTotal +'</span>'); 
+        $totalCost.text('Total Cost: $'+ $storeTotal).addClass('cost');
       
     //dealing with conflicting activities day/time//
         if ($clickedDayTime === $checkboxDayTime){
