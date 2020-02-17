@@ -86,7 +86,7 @@ $('.activities').on('change',function(event){
         } else if ($clicked.eq(i).prop('checked')===false){
             $storeTotal = $storeTotal - $clickedCostNum;
         } 
-        $(totalCost).html('<span>Total Cost: $'+ $storeTotal +'</span>');
+        $(totalCost).html('<span class="cost">Total Cost: $'+ $storeTotal +'</span>');
       
     //dealing with conflicting activities day/time//
         if ($clickedDayTime === $checkboxDayTime){
@@ -257,6 +257,7 @@ const ccValidation = () => {
         if ($zip.val().length > 0 && $isValid == true){
             $('#error-zip').css({"display":"none"});
             $zip.css({"border":"none"}); 
+            console.log("zip is correct")
             return true;
         } else {
             if($('#error-zip').length > 0) //checks for error message already existing
@@ -264,6 +265,7 @@ const ccValidation = () => {
             } else {
                 $zip.after($('<div class="error-message" id="error-zip">Please enter a valid zip code.</div>'));
                 $zip.css({"border":"#d86d09 solid 2px","margin-bottom":"2px"}); 
+                console.log("zip is bad")
                 return false;
             }
         }
