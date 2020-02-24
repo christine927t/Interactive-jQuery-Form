@@ -3,8 +3,7 @@
 ## *by Christine Treacy*
 ### Treehouse FSJS Techdegree Project 2
 
-#### Description/Features: Interactive-jQuery-Form
-
+#### Description/Features: 
 This is a form I built with jQuery that provides real time error messages, as well as on-submit error messages, when the information provided in the fields doesn't match the requirements for the form. 
 
 ## Built With:
